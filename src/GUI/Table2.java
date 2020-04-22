@@ -5,24 +5,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import TCPClient.ClientC;
 import TCPClient.ClientO;
-import javax.swing.ScrollPaneConstants;
 
 public class Table2 extends JFrame {
 
@@ -65,6 +64,9 @@ public class Table2 extends JFrame {
 	JButton btnNewButton_5;	// 추천 곡.
 	JButton btnNewButton_4; // 재생 목록.
 	JButton btnNewButton_3;	// 로그아웃.
+	
+	JPopupMenu popup; // 오른쪽 마우스 클릭시 팝업 메뉴.
+	JMenuItem popSelect;
 	
 	/**
 	 * Launch the application.
@@ -188,6 +190,7 @@ public class Table2 extends JFrame {
 		startList();
 		suggest();	// 추천 목록.
 		logout();
+//		mRclick();	// 마우스 오른쪽 클릭.
 	}
 
 	public void sList() {
@@ -221,7 +224,31 @@ public class Table2 extends JFrame {
 		
 	}
 	
-	private void logout() {	// 로그아웃.
+/*	private void rightPop() {	// 오른쪽 마우스 팝업 메소드.
+		popup = new JPopupMenu(); // 오른쪽 마우스 클릭시 팝업 메뉴.
+		popSelect = new JMenuItem("선택한 곡 삭제");
+		popSelect.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// 선택한 곡만 삭제.
+			}
+		});
+		
+		popSelect = new JMenuItem("전체 목록 삭제");
+		popSelect.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// 전체 곡 삭제.
+			}
+		});
+		popup.add(popSelect);
+	} */
+	
+	
+	
+	private void logout() {	// 로그아웃 버튼.
 		btnNewButton_3.addActionListener(new ActionListener() {
 			
 			@Override
@@ -232,15 +259,8 @@ public class Table2 extends JFrame {
 				for(int i = 0 ; i < rowNum ; i++) {
 					tableModel_1.removeRow(0);
 				}
-				
-//				Cc.loging = false;	// 로그아웃을 true & false 로 구분. 밑 줄에 if(Cc.loging == false) 넣어도 됨.
-//				Cc.IDing = null;
-//				panel_1.setVisible(false);
 				textField.setText("");	// id 공백으로.
 				textField_1.setText("");	// pw 공백으로.
-////				lblNewLabel_3.setText("");	// id & pw 때 문구. -> Cc로 이동.
-//				panel.setVisible(true);
-				
 				Cc.codejoin("로그아웃");	
 			}
 		});
@@ -306,6 +326,24 @@ public class Table2 extends JFrame {
 			}
 		}); 
 	}
+	
+/*	private void mRclick() {	// 오른쪽 마우스 클릭.
+		table_1.add(popup);
+		table_1.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (e.getButton() == 3) {
+					int row = table_1.getSelectedRow();
+					int column = table_1.getSelectedColumn();
+//					int row = table_1.rowAtPoint(e.getPoint());
+//					int column = table_1.columnAtPoint(e.getPoint());
+					table_1.changeSelection(row, column, false, false);
+					
+					popup.show(table_1, e.getX(), e.getY());
+					System.out.println("오른쪽이다아아아아ㅏ아");
+				}
+			}
+		});
+	}	*/
 	
 // ☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
 	

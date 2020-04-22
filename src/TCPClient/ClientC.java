@@ -15,7 +15,7 @@ import GUI.Table2;
 public class ClientC {
 
 	public String IDing; // 현재 로그인 한 계정.
-	public Boolean loging = false;
+	public Boolean loging = false;	// 로그인 표시용.
 
 	Socket socket = null;
 	OutputStream output = null;
