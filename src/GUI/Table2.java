@@ -66,7 +66,7 @@ public class Table2 extends JFrame {
 	JButton btnNewButton_3;	// 로그아웃.
 	
 	JPopupMenu popup; // 오른쪽 마우스 클릭시 팝업 메뉴.
-	JMenuItem popSelect;
+	JMenuItem popSelect, popAllS;
 	
 	/**
 	 * Launch the application.
@@ -190,7 +190,7 @@ public class Table2 extends JFrame {
 		startList();
 		suggest();	// 추천 목록.
 		logout();
-//		mRclick();	// 마우스 오른쪽 클릭.
+		
 	}
 
 	public void sList() {
@@ -222,31 +222,12 @@ public class Table2 extends JFrame {
 		table_1.setShowVerticalLines(false);
 		table_1.setShowHorizontalLines(false);
 		
+		
+		rightPop();	// 오른쪽 마우스 눌렀을 때 나오는 메뉴.
+		mRclick();	// 오른쪽 마우스 눌렀을 때.
 	}
 	
-/*	private void rightPop() {	// 오른쪽 마우스 팝업 메소드.
-		popup = new JPopupMenu(); // 오른쪽 마우스 클릭시 팝업 메뉴.
-		popSelect = new JMenuItem("선택한 곡 삭제");
-		popSelect.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// 선택한 곡만 삭제.
-			}
-		});
 		
-		popSelect = new JMenuItem("전체 목록 삭제");
-		popSelect.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// 전체 곡 삭제.
-			}
-		});
-		popup.add(popSelect);
-	} */
-	
-	
 	
 	private void logout() {	// 로그아웃 버튼.
 		btnNewButton_3.addActionListener(new ActionListener() {
@@ -296,7 +277,6 @@ public class Table2 extends JFrame {
 					tableModel_1.removeRow(0);
 				}
 				Co.receiveLS();	//재활용.
-				System.out.println(guest + " 게스트 잘 나오니?");
 				Cc.send(guest+"/추천목록주세요");
 			}
 		});
@@ -306,7 +286,7 @@ public class Table2 extends JFrame {
 	public void nonguest() {	// 로그인시 리스트 제거.
 		final int rowNum = tableModel_1.getRowCount();
 		for(int i = 0 ; i < rowNum ; i++) {
-			System.out.println(rowNum);
+			System.out.println(rowNum + " 포트 번호");
 			tableModel_1.removeRow(0);
 		}
 	}
@@ -327,23 +307,78 @@ public class Table2 extends JFrame {
 		}); 
 	}
 	
-/*	private void mRclick() {	// 오른쪽 마우스 클릭.
+	
+	private void mRclick() {	// 오른쪽 마우스 클릭.
 		table_1.add(popup);
 		table_1.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getButton() == 3) {
 					int row = table_1.getSelectedRow();
 					int column = table_1.getSelectedColumn();
-//					int row = table_1.rowAtPoint(e.getPoint());
-//					int column = table_1.columnAtPoint(e.getPoint());
 					table_1.changeSelection(row, column, false, false);
 					
 					popup.show(table_1, e.getX(), e.getY());
-					System.out.println("오른쪽이다아아아아ㅏ아");
 				}
 			}
 		});
-	}	*/
+	}
+	
+	public int selRow;
+	private void rightPop() {	// 오른쪽 마우스 팝업 메소드.
+		popup = new JPopupMenu(); // 오른쪽 마우스 클릭시 팝업 메뉴.
+		popSelect = new JMenuItem("선택 곡 삭제");
+		popSelect.setFont(new Font("굴림", Font.PLAIN, 12));
+		popSelect.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// 선택 곡만 삭제.
+				if(Cc.loging == false) {	// 비로그인일 때 선택 삭제.
+					int row = table_1.getSelectedRow();
+					tableModel_1.removeRow(row);
+				} else if (Cc.loging == true) { // 로그인했을 때 선택 삭제.
+			//===  선택 삭제     ============================================
+					String selData[] = new String[3];
+					selRow = table_1.getSelectedRow();
+					for(int i = 0 ; i < 3; i++) {
+						selData[i] = (String) table_1.getValueAt(selRow, i);
+					}
+					String selID = Cc.IDing;
+					String selTitle = selData[0];	// <-
+					String selName = selData[1];
+					String selGenre = selData[2];
+					String selDel = selID+"/"+selTitle+"/"+selName+"/"+selGenre+"/선택삭제";
+					Cc.send(selDel);
+			//===========================================================
+				}
+			}
+		});
+		
+		popAllS = new JMenuItem("전체 목록 삭제");
+		popAllS.setFont(new Font("굴림", Font.PLAIN, 12));
+		popAllS.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// 전체 곡 삭제.
+//				tableModel_1.removeRow();
+				if(Cc.loging == false) {	// 비로그인일 때 전체 삭제.
+					int rowNum = tableModel_1.getRowCount();
+					for(int i = 0 ; i < rowNum ; i++ ) {
+						tableModel_1.removeRow(0);
+					}
+				} else if(Cc.loging == true) { // 로그인했을 때 전체 삭제.
+					String selID = Cc.IDing;
+					String selDel = selID + "/전체삭제";
+					Cc.send(selDel);
+				}
+				
+			}
+		});
+		popup.add(popSelect);
+		popup.add(popAllS);
+	} 
+	
 	
 // ☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
 	
@@ -357,6 +392,7 @@ public class Table2 extends JFrame {
 				new Join2(tt, Cc); // this 하면 액션리스너 자체가 보내진다??? 엥?
 			}
 		});
+		
 	}
 	
 

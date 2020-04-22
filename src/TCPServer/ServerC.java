@@ -29,9 +29,7 @@ public class ServerC {
 
 	// ---- 2개 port 사용 ---------------------------------------------
 	ServerSocket Oserver;
-
 	Socket Osocket = null;
-
 	Random r = new Random();
 	// ---------------------------------------------------------------
 	ServerO serverO;
@@ -94,7 +92,6 @@ public class ServerC {
 	}
 	
 	private void joincode(String jj) { // 명령어 분류하는 곳. // //일단 serverO로 이동.
-		System.out.println(jj + " 11313131313131313131313");
 		if (jj.contains("계정")) {
 			String id = token(jj);//+"/계정확인";
 			sendBridge(id);
@@ -106,10 +103,13 @@ public class ServerC {
 		} else if (jj.contains("추천목록주세요")) {
 			tokenSuggest(jj);
 		} else if (jj.contains("재생목록")) {
-			System.out.println(jj + " 2424242424242424");
 			tokenSList(jj);
+		} else if (jj.contains("선택삭제")) {
+			deleteSel(jj);
+		} else if (jj.indexOf("전체삭제") != -1) {
+			deleteAll(jj);
 		}
-				
+			
 		
 		switch (jj) {
 		case "메인프레임":
@@ -163,7 +163,6 @@ public class ServerC {
 			idDAO = st.nextToken();
 			st.nextToken();
 		}
-		System.out.println(serverO + "........");
 		serverO.logSong(serverO.sDAO.logSongList(idDAO));
 	}
 	
@@ -175,6 +174,39 @@ public class ServerC {
 			st.nextToken();
 		}
 		serverO.suggestS(serverO.sDAO.suggest(sugID));
+	}
+	
+	
+	private void deleteSel(String selDel) {
+		sDAO = SongDAO.sigleton();
+		String selID = null;
+		String selTitle = null;
+		String selName = null;
+		String selGenre = null;
+		StringTokenizer st = new StringTokenizer(selDel, "/");
+		while(st.hasMoreTokens()) {
+			selID = st.nextToken();
+			selTitle = st.nextToken();
+			selName = st.nextToken();
+			selGenre = st.nextToken();
+			st.nextToken();
+		}
+		String check = sDAO.deleteSong(selID, selTitle, selName, selGenre);
+		sendBridge(check);
+		
+	}
+	
+	private void deleteAll(String allDel) {
+		sDAO = SongDAO.sigleton();
+		String allID = null;
+		StringTokenizer st = new StringTokenizer(allDel, "/");
+		while(st.hasMoreTokens()) {
+			allID = st.nextToken();
+			st.nextToken();
+		}
+		String check = sDAO.deleteAllSong(allID);
+		sendBridge(check);
+		
 	}
 	
 }

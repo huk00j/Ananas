@@ -69,7 +69,6 @@ public class ClientC {
 			input.read(bb);
 			String qq = new String(bb);
 			qq = qq.trim();
-			System.out.println(qq + " ㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔ");
 			this.qq = Integer.valueOf(qq);
 
 		} catch (IOException e) {
@@ -172,7 +171,6 @@ public class ClientC {
 				break;
 			}
 		case "로그인실패":
-			System.out.println("이거 나와??");
 			table2.lblNewLabel_3.setText("가입하지 않은 아이디거나 잘못된 번호입니다.");
 			table2.lblNewLabel_3.setForeground(Color.RED);
 			break;
@@ -186,8 +184,15 @@ public class ClientC {
 				table2.panel_1.setVisible(false);
 				break;
 			}
-			
 			break;
+		case "선택삭제완료":
+			table2.tableModel_1.removeRow(table2.selRow);
+			break;
+		case "전체삭제완료":
+			int rowNum = table2.tableModel_1.getRowCount();
+			for(int i = 0 ; i < rowNum ; i++ ) {
+				table2.tableModel_1.removeRow(0);
+			}
 		default:
 			break;
 		}

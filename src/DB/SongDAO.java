@@ -42,7 +42,6 @@ public class SongDAO {
 	}
 
 	public ArrayList<String[]> tableList() {	// 맨 처음 전체 노래 목록 가져오기.
-		System.out.println("333333333333333333");
 		ArrayList<String[]> list = new ArrayList<>();
 		String sql = "select * from song";
 		if (connect()) {
@@ -120,16 +119,12 @@ public class SongDAO {
 	public ArrayList<String[]> suggest(String sugID) {	//추천곡 장르 뽑기.
 		if(connect()) {
 			String best = null;
-			System.out.println(sugID + "<-이건 뭐 뜨니!");
 			String sql = "select genre from(select genre, count(*) cnt from popular where id = ? group by genre order by cnt desc ) where rownum <=1";
 			try {
 				ppsm = conn.prepareStatement(sql);
 				ppsm.setString(1, sugID);
-				System.out.println("1 1 1 1 1 1 1 1");
 				if(rs != null) {
-					System.out.println("2 2 2 2 2 2 2 2");
 					rs = ppsm.executeQuery();
-					System.out.println("3 3 3 3 3 3");
 					if(rs.next()) {
 						DTO dto = new DTO();
 						dto.setGenre(rs.getString("genre"));
@@ -165,6 +160,49 @@ public class SongDAO {
 					}
 				}
 				return gList2;
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
+	
+	public String deleteSong(String id, String title, String name, String genre) {
+		if(connect()) {
+			String reCheck = null;
+			String sql = "delete popular where id = ? and title = ? and name = ? and genre = ?";
+			try {
+				ppsm = conn.prepareStatement(sql);
+				ppsm.setString(1, id);
+				ppsm.setString(2, title);
+				ppsm.setString(3, name);
+				ppsm.setString(4, genre);
+				int check = ppsm.executeUpdate();
+				if(check != 0) {
+					reCheck = "선택삭제완료"; 
+				}
+				return reCheck;
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
+	public String deleteAllSong(String id) {
+		if(connect()) {
+			String reCheck = null;
+			String sql = "delete popular where id = ?";
+			
+			try {
+				ppsm = conn.prepareStatement(sql);
+				ppsm.setString(1, id);
+				int check = ppsm.executeUpdate();
+				if(check != 0) {
+					reCheck = "전체삭제완료";
+				}
+				return reCheck;
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
