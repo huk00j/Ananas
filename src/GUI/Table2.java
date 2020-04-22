@@ -44,7 +44,7 @@ public class Table2 extends JFrame {
 	private final JLabel lblNewLabel = new JLabel("ID");
 	public JTextField textField = new JTextField(); // ID 가져와서 띄워주기 위함.
 	private final JLabel lblNewLabel_1 = new JLabel("PW");
-	private final JTextField textField_1 = new JTextField();
+	private final JTextField textField_1 = new JTextField();	// PW.
 	private final JButton btnNewButton = new JButton("로그인");
 	private final JButton btnNewButton_1 = new JButton("회원가입");
 	private Table2 tt;
@@ -60,9 +60,11 @@ public class Table2 extends JFrame {
 	public JTable table_1;
 	public DefaultTableModel tableModel_1;
 
-	public Boolean loginID;
+//	public Boolean loginID;
 	
-	JButton btnNewButton_5;
+	JButton btnNewButton_5;	// 추천 곡.
+	JButton btnNewButton_4; // 재생 목록.
+	JButton btnNewButton_3;	// 로그아웃.
 	
 	/**
 	 * Launch the application.
@@ -168,12 +170,12 @@ public class Table2 extends JFrame {
 		btnNewButton_2.setBounds(12, 50, 97, 35);
 		panel_1.add(btnNewButton_2);
 
-		JButton btnNewButton_3 = new JButton("로그 아웃");
+		btnNewButton_3 = new JButton("로그 아웃");
 		btnNewButton_3.setFont(new Font("굴림", Font.PLAIN, 12));
 		btnNewButton_3.setBounds(121, 50, 97, 35);
 		panel_1.add(btnNewButton_3);
 
-		JButton btnNewButton_4 = new JButton("재생 목록");
+		btnNewButton_4 = new JButton("재생 목록");
 		btnNewButton_4.setFont(new Font("굴림", Font.PLAIN, 12));
 		btnNewButton_4.setBounds(12, 95, 97, 35);
 		panel_1.add(btnNewButton_4);
@@ -183,7 +185,9 @@ public class Table2 extends JFrame {
 		btnNewButton_5.setBounds(121, 95, 97, 35);
 		panel_1.add(btnNewButton_5);
 		
+		startList();
 		suggest();	// 추천 목록.
+		logout();
 	}
 
 	public void sList() {
@@ -217,7 +221,52 @@ public class Table2 extends JFrame {
 		
 	}
 	
-	public void suggest() {
+	private void logout() {	// 로그아웃.
+		btnNewButton_3.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("로그아웃 눌렀다!!");
+				
+				final int rowNum = tableModel_1.getRowCount();
+				for(int i = 0 ; i < rowNum ; i++) {
+					tableModel_1.removeRow(0);
+				}
+				
+//				Cc.loging = false;	// 로그아웃을 true & false 로 구분. 밑 줄에 if(Cc.loging == false) 넣어도 됨.
+//				Cc.IDing = null;
+//				panel_1.setVisible(false);
+				textField.setText("");	// id 공백으로.
+				textField_1.setText("");	// pw 공백으로.
+////				lblNewLabel_3.setText("");	// id & pw 때 문구. -> Cc로 이동.
+//				panel.setVisible(true);
+				
+				Cc.codejoin("로그아웃");	
+			}
+		});
+	}
+	
+	
+	private void startList() {	// 재생 목록.
+		btnNewButton_4.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				final int rowNum = tableModel_1.getRowCount();
+				for(int i = 0 ; i < rowNum ; i++) {
+					tableModel_1.removeRow(0);	// 복붙 해놓음.
+				}
+				//-------------------------------------- 로그인 하면 계정 명을 가져와서 select 문으로 곡 가져오기.
+				String id = Cc.IDing;
+				Co.receiveLS();
+				Cc.send(id+"/재생목록");	// 이게 문제인데... "계정별재생목록" -> "재생목록"으로 변경.
+				
+			}
+		});
+	}
+	
+	
+	public void suggest() {	// 추천 곡.
 		btnNewButton_5.addActionListener(new ActionListener() {
 			
 			@Override
@@ -227,6 +276,7 @@ public class Table2 extends JFrame {
 					tableModel_1.removeRow(0);
 				}
 				Co.receiveLS();	//재활용.
+				System.out.println(guest + " 게스트 잘 나오니?");
 				Cc.send(guest+"/추천목록주세요");
 			}
 		});
@@ -256,7 +306,6 @@ public class Table2 extends JFrame {
 			}
 		}); 
 	}
-	
 	
 // ☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
 	

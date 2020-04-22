@@ -98,7 +98,8 @@ public class ServerO {
 		}
 	}
 	
-	private void codeSo(String order) {
+	
+	private void codeSo(String order) {	//전체 노래 목록 불러오기.
 		if (order.contains("노래목록불러오기")) {
 			sDAO = SongDAO.sigleton(); // 싱글톤 // 크~.
 			ArrayList<String[]> slist = sDAO.tableList();
@@ -118,7 +119,7 @@ public class ServerO {
 	}
 
 	
-	public void suggestS(ArrayList<String[]> arrayList) {
+	public void suggestS(ArrayList<String[]> arrayList) {	// 추천 곡.
 		ArrayList<String[]> gList = arrayList;
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		try {

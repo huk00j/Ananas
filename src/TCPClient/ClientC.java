@@ -155,11 +155,12 @@ public class ClientC {
 
 		case "로그인성공":
 			loging = true;
-			table2.loginID = true;
+//			table2.loginID = true;
 
-			if (loging) {
+			if (loging == true) {
 				table2.panel.setVisible(false);
-
+				table2.lblNewLabel_3.setText("");	// id & pw 틀렸을 때 나오는 빨간색 문구.
+				
 				IDing = table2.textField.getText(); // 현재 로그인 한 계정.
 				table2.guest = IDing;
 				table2.logQ();
@@ -167,20 +168,31 @@ public class ClientC {
 				table2.panel_1.setVisible(true);
 				
 				clientO.receiveLS(); // 오브젝트 받기 위한 준비.
-//				clientO.sendO(IDing+"/로그인노래목록");
-				
 				send(IDing+"/로그인노래목록");
-				
 				break;
 			}
 		case "로그인실패":
+			System.out.println("이거 나와??");
 			table2.lblNewLabel_3.setText("가입하지 않은 아이디거나 잘못된 번호입니다.");
 			table2.lblNewLabel_3.setForeground(Color.RED);
+			break;
+		case "로그아웃":
+			loging = false;
+			
+			if(loging == false) {
+				table2.panel.setVisible(true);
+				IDing = null;
+				table2.guest = "";
+				table2.panel_1.setVisible(false);
+				break;
+			}
+			
 			break;
 		default:
 			break;
 		}
 
+			
 	}
 	
 }

@@ -94,7 +94,7 @@ public class ServerC {
 	}
 	
 	private void joincode(String jj) { // 명령어 분류하는 곳. // //일단 serverO로 이동.
-
+		System.out.println(jj + " 11313131313131313131313");
 		if (jj.contains("계정")) {
 			String id = token(jj);//+"/계정확인";
 			sendBridge(id);
@@ -105,6 +105,9 @@ public class ServerC {
 			tokenSList(jj);
 		} else if (jj.contains("추천목록주세요")) {
 			tokenSuggest(jj);
+		} else if (jj.contains("재생목록")) {
+			System.out.println(jj + " 2424242424242424");
+			tokenSList(jj);
 		}
 				
 		
@@ -153,7 +156,7 @@ public class ServerC {
 		return checkk;
 	}
 	
-	private void tokenSList(String ids) {
+	private void tokenSList(String ids) {	// 로그인시 재생 목록.
 		String idDAO = null;
 		StringTokenizer st = new StringTokenizer(ids, "/");
 		while(st.hasMoreTokens()) {
@@ -164,7 +167,7 @@ public class ServerC {
 		serverO.logSong(serverO.sDAO.logSongList(idDAO));
 	}
 	
-	private void tokenSuggest(String suggest) {
+	private void tokenSuggest(String suggest) {	// 추천 곡.
 		String sugID = null;
 		StringTokenizer st = new StringTokenizer(suggest, "/");
 		while(st.hasMoreTokens()) {
