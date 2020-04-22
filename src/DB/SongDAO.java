@@ -72,8 +72,6 @@ public class SongDAO {
 	}
 
 	public int listenList(DTO dto) {
-//		String qwe[] = new String[4];
-//		dto.cyclist();
 		if (connect()) {
 			String sql = "insert into popular values(?, ?, ?, ?)";
 			try {
@@ -86,7 +84,6 @@ public class SongDAO {
 				
 				return k;
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -120,30 +117,26 @@ public class SongDAO {
 	}
 	
 	
-	public ArrayList<String[]> suggest(String sugID) {
+	public ArrayList<String[]> suggest(String sugID) {	//추천곡 장르 뽑기.
 		if(connect()) {
-			ArrayList<String[]> gList = new ArrayList<>();
 			String best = null;
-//			String sql = "select genre ,cnt from(" + 
-//					"select genre, count(*) cnt from popular where id = ? " + 
-//					"group by genre order by cnt desc" + 
-//					") where rownum <=1;";	// sql문 확인
-			String sql = "select genre ,cnt from(select genre, count(*) cnt from popular where id ='"+sugID+"' group by genre order by cnt desc ) where rownum <=1;";
+			System.out.println(sugID + "<-이건 뭐 뜨니!");
+			String sql = "select genre from(select genre, count(*) cnt from popular where id = ? group by genre order by cnt desc ) where rownum <=1";
 			try {
 				ppsm = conn.prepareStatement(sql);
 				ppsm.setString(1, sugID);
-				if(ppsm != null) {
-					System.out.println("11111111111111111");
+				System.out.println("1 1 1 1 1 1 1 1");
+				if(rs != null) {
+					System.out.println("2 2 2 2 2 2 2 2");
 					rs = ppsm.executeQuery();
-					System.out.println("22222222222222222");
+					System.out.println("3 3 3 3 3 3");
 					if(rs.next()) {
 						DTO dto = new DTO();
 						dto.setGenre(rs.getString("genre"));
 						best = dto.getGenre();
 					}
 				}
-				System.out.println(best +"do my best");
-				return suggest2(best);	// 이게 맞나?
+				return suggest2(best);	// 이게 맞나? -> 맞음.
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -153,9 +146,7 @@ public class SongDAO {
 	}
 	
 	
-	public ArrayList<String[]> suggest2(String genre) {
-		System.out.println("아무거난ㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ");
-		System.out.println(genre + " ㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ");
+	public ArrayList<String[]> suggest2(String genre) {	//추천곡. 장르에서 곡 뽑아오기.
 		if(connect()) {
 			ArrayList<String[]> gList2 = new ArrayList<>();
 			String sql = "select title, name, genre from song where genre = ?";
