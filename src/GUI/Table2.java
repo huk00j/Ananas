@@ -20,6 +20,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import Music.MusicSet;
 import TCPClient.ClientC;
 import TCPClient.ClientO;
 
@@ -67,6 +68,8 @@ public class Table2 extends JFrame {
 	
 	JPopupMenu popup; // 오른쪽 마우스 클릭시 팝업 메뉴.
 	JMenuItem popSelect, popAllS;
+	
+	MusicSet music;
 	
 	/**
 	 * Launch the application.
@@ -147,6 +150,9 @@ public class Table2 extends JFrame {
 		joinQ(); // 회원가입 버튼.
 		afterLog(); // 로그인 버튼.
 		mClick(); // 마우스 더블 클릭. -> 왼쪽 테이블 값을 오른쪽 테이블 값에 띄워주기.
+		
+		musicStart() ;
+		musicStop();
 
 	}
 
@@ -222,7 +228,6 @@ public class Table2 extends JFrame {
 		table_1.setShowVerticalLines(false);
 		table_1.setShowHorizontalLines(false);
 		
-		
 		rightPop();	// 오른쪽 마우스 눌렀을 때 나오는 메뉴.
 		mRclick();	// 오른쪽 마우스 눌렀을 때.
 	}
@@ -257,7 +262,6 @@ public class Table2 extends JFrame {
 				for(int i = 0 ; i < rowNum ; i++) {
 					tableModel_1.removeRow(0);	// 복붙 해놓음.
 				}
-				//-------------------------------------- 로그인 하면 계정 명을 가져와서 select 문으로 곡 가져오기.
 				String id = Cc.IDing;
 				Co.receiveLS();
 				Cc.send(id+"/재생목록");	// 이게 문제인데... "계정별재생목록" -> "재생목록"으로 변경.
@@ -419,4 +423,81 @@ public class Table2 extends JFrame {
 			}
 		});
 	}
+	
+	//------ 노래 재생 ----------------------------------------------------------------------
+	
+	
+	public void musicStart() {
+		btnNewButton_6.addActionListener(new ActionListener() {
+			int check = 0; // 5초가 되면 종료하게끔.
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(Cc.loging == false) {
+					System.out.println("하나");
+					String selData[] = new String[3];
+					selRow = table_1.getSelectedRow();
+					for(int i = 0 ; i < 3; i++) {
+						selData[i] = (String) table_1.getValueAt(selRow, i);
+					}
+					String selTitle = selData[0];	// <-
+					String selName = selData[1];
+					
+					music = new MusicSet(selName, selTitle);	// 세팅 -> 노래가 계속 바뀔 수 있으므로.
+					
+					//============================
+					music.run();	// <- 미리 듣기로 변경.
+//					if(check >= 500) {
+//						music.close();
+//					}
+					//============================
+					
+				} else if (Cc.loging == true) {
+					System.out.println("둘");
+					
+					String selData[] = new String[3];
+					selRow = table_1.getSelectedRow();
+					for(int i = 0 ; i < 3; i++) {
+						selData[i] = (String) table_1.getValueAt(selRow, i);
+					}
+					String selTitle = selData[0];
+					String selName = selData[1];
+					
+//					music.close();
+					music = new MusicSet(selName, selTitle);
+					music.run();
+				}
+			}
+		});
+	}
+	
+	
+	public void musicStop() {
+		btnNewButton_7.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				music.close();
+			}
+		});
+	}
+	
+	
+	
+	
+	
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -193,6 +193,8 @@ public class ClientC {
 			for(int i = 0 ; i < rowNum ; i++ ) {
 				table2.tableModel_1.removeRow(0);
 			}
+		case "음악재생":
+//			table2.
 		default:
 			break;
 		}
