@@ -220,28 +220,6 @@ public class SongDAO {
 
 }
 
-/*	public String startMusci(String title, String name, String genre) {
-if(connect()) {
-	String reCheck = null;
-	String sql = "select title, name, genre from song where title = ? and name = ? and genre = ?";
-	
-	try {
-		ppsm = conn.prepareStatement(sql);
-		ppsm.setString(1, title);
-		ppsm.setString(2, name);
-		ppsm.setString(2, genre);
-		int check = ppsm.executeUpdate();
-		if(check != 0) {
-			reCheck = "음악재생";
-		}
-		return reCheck;
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}
-}
-return null;
-}	*/
-
 
 
 

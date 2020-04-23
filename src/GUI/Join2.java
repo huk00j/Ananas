@@ -120,7 +120,6 @@ public class Join2 extends JFrame {
 		lblNewLabel_20.setFont(new Font("굴림", Font.PLAIN, 12));
 		lblNewLabel_20.setBounds(50, 75, 150, 15);
 		contentPane.add(lblNewLabel_20);	
-
 		
 		lblNewLabel_5 = new JLabel("비밀번호가 일치하지 않습니다.");
 		lblNewLabel_5.setFont(new Font("굴림", Font.PLAIN, 12));

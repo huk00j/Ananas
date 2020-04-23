@@ -1,6 +1,8 @@
 package GUI;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,8 +14,7 @@ import javax.swing.border.EmptyBorder;
 public class ElseWindow extends JFrame {
 
 	private JPanel contentPane;
-	private ElseWindow ew = null;
-	
+	JButton btnNewButton;
 	
 	/**
 	 * Launch the application.
@@ -29,13 +30,14 @@ public class ElseWindow extends JFrame {
 				}
 			}
 		});
-	}	*/
+	}	*/ 
 
 	/**
 	 * Create the frame.
 	 */
 	public ElseWindow() {
-//	elseJoin();
+//		elseJoin();
+//		nonSel();
 	}
 
 
@@ -51,20 +53,49 @@ public class ElseWindow extends JFrame {
 		JLabel lblNewLabel_1 = new JLabel("<html><center><html>회원가입이 절차가 완료되었습니다. <br>  <br> 로그인 하여 다양한 기능을 사용해보세요.<br></html>");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setFont(new Font("굴림", Font.PLAIN, 12));
-		lblNewLabel_1.setBounds(29, 10, 238, 56);
+		lblNewLabel_1.setBounds(25, 10, 238, 56);
 		contentPane.add(lblNewLabel_1);
 		
-		JLabel lblNewLabel = new JLabel("사진을 누르면 자동으로 로그인 됩니다.");
+		JLabel lblNewLabel = new JLabel("사진을 누르면 창을 닫혀집니다.");
 		lblNewLabel.setFont(new Font("굴림", Font.PLAIN, 12));
-		lblNewLabel.setBounds(29, 157, 231, 45);
+		lblNewLabel.setBounds(30, 157, 231, 45);
 		contentPane.add(lblNewLabel);
 		
-		JButton btnNewButton = new JButton("New button");
-		btnNewButton.setBounds(39, 76, 209, 80);
+		btnNewButton = new JButton("New button");
+		btnNewButton.setBounds(39, 76, 200, 75);
 		contentPane.add(btnNewButton);
 		
 		this.setVisible(true);
 		
+		elseJoinEnd();
+	}
+	
+	
+	private void elseJoinEnd() {
+		btnNewButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+	}
+	
+
+	public void nonSel() {
+		setBounds(600, 300, 270, 130);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		
+		JLabel lblNewLabel_2 = new JLabel("<html><center><html>목록에서 재생할 곡을 선택하세요.<br></html>");
+		lblNewLabel_2.setFont(new Font("굴림", Font.PLAIN, 15));
+		lblNewLabel_2.setBounds(13, 9, 230, 60);
+		getContentPane().add(lblNewLabel_2);
+		
+		this.setVisible(true);
 	}
 }
 

@@ -154,6 +154,11 @@ public class ClientC {
 
 		case "로그인성공":
 			loging = true;
+			
+			if(table2.ing == true) {	// 비로그인 상태에서 재생중 로그인 했을 때 노래 정지.
+				table2.music.musicOff();
+				table2.ing = false;
+			}
 //			table2.loginID = true;
 
 			if (loging == true) {
@@ -177,6 +182,11 @@ public class ClientC {
 		case "로그아웃":
 			loging = false;
 			
+			if(table2.ing == true) {	// 로그인 상태에서 재생중 로그아웃 했을 때 노래 정지.
+				table2.music.musicOff();
+				table2.ing = false;
+			}
+			
 			if(loging == false) {
 				table2.panel.setVisible(true);
 				IDing = null;
@@ -193,8 +203,6 @@ public class ClientC {
 			for(int i = 0 ; i < rowNum ; i++ ) {
 				table2.tableModel_1.removeRow(0);
 			}
-		case "음악재생":
-//			table2.
 		default:
 			break;
 		}

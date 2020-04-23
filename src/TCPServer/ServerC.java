@@ -212,21 +212,6 @@ public class ServerC {
 		
 	}
 	
-/*	private void musicStart(String mStart) {
-		sDAO = SongDAO.sigleton();
-		String title = null;
-		String name = null;
-		String genre = null;
-		StringTokenizer st = new StringTokenizer(mStart, "/");
-		while(st.hasMoreTokens()) {
-			title = st.nextToken();
-			name = st.nextToken();
-			genre = st.nextToken();
-			st.nextToken();
-		}
-		String checkMusic = sDAO.startMusci(title, name, genre);
-		sendBridge(checkMusic);
-	} */
 }
 
 
