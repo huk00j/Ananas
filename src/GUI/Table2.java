@@ -189,20 +189,62 @@ public class Table2 extends JFrame {
 	}
 
 	// ====== 생성자 ===================================
-	private void next() {
+	private void previous() {
 	
 		btnNewButton_9.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int selRow = table_1.getSelectedRow();
+				int limitRow = table_1.getSelectedRowCount() -1;
+				if(selRow == limitRow) {
+					window.previousW();
+				}else {
+					if (ing == true) { // 노래 겹치기 방지용.
+						music.musicOff();
+						ing = false;
+					}
+				table_1.setRowSelectionInterval(selRow - 1, selRow - 1);
 				
+				String selTitle = (String) table_1.getValueAt(selRow-1, 0);
+				String selName = (String) table_1.getValueAt(selRow-1, 1);
+
+				music = new MusicSet(selName, selTitle);
+				if(Cc.loging == false) {
+					music.nlogStart();	// 이거 없애고 로그인용으로 전환.
+				}else if (Cc.loging == true) {
+					music.logStart();
+				}
+				ing = true;
+				}
 			}
 		});
 	}
-
 	
-	private void previous() {
+	
+	private void next() {
 		btnNewButton_10.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int selRow = table_1.getSelectedRow();	// 	0부터 센다.
+				int limitRow = table_1.getRowCount() - 1;	// 1부터 센다.
+				if(selRow == limitRow) {
+					window.nextW();
+				}else {
+					if (ing == true) { // 노래 겹치기 방지용.
+						music.musicOff();
+						ing = false;
+					}
+				table_1.setRowSelectionInterval(selRow + 1, selRow + 1);
 				
+				String selTitle = (String) table_1.getValueAt(selRow +1, 0);
+				String selName = (String) table_1.getValueAt(selRow +1, 1);
+
+				music = new MusicSet(selName, selTitle);
+				if(Cc.loging == false) {
+					music.nlogStart();	// 이거 없애고 로그인용으로 전환.
+				}else if (Cc.loging == true) {
+					music.logStart();
+				}
+				ing = true;
+				}
 			}
 		});
 		
@@ -531,9 +573,17 @@ public class Table2 extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				music.musicOff();
-				ing = false;
+				
+				if (ing == true) { // 노래 겹치기 방지용.
+					music.musicOff();
+					ing = false;
+				} else if (ing == false){
+					window.stopW();
+				}
 			}
 		});
 	}
+	
+	
 }
+

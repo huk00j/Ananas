@@ -38,11 +38,12 @@ public class ElseWindow extends JFrame {
 	public ElseWindow() {
 //		elseJoin();
 //		nonSel();
+//		previousW();
 	}
 
 
 	public void elseJoin() {	// 회원 가입 완료시
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(200, 100, 300, 250);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -83,7 +84,7 @@ public class ElseWindow extends JFrame {
 	
 
 	public void nonSel() {
-		setBounds(600, 300, 270, 130);
+		setBounds(500, 400, 270, 130);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -97,6 +98,55 @@ public class ElseWindow extends JFrame {
 		
 		this.setVisible(true);
 	}
+	
+	
+	public void previousW() {
+		setBounds(510, 400, 270, 130);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblNewLabel_3 = new JLabel("<html><center><html>이전 곡이 없습니다.<br></html>");
+		lblNewLabel_3.setFont(new Font("굴림", Font.PLAIN, 15));
+		lblNewLabel_3.setBounds(13, 9, 230, 60);
+		getContentPane().add(lblNewLabel_3);
+		
+		this.setVisible(true);
+	}
+	
+	
+	public void nextW() {
+		setBounds(510, 400, 270, 130);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblNewLabel_4 = new JLabel("<html><center><html>다음 곡이 없습니다.<br></html>");
+		lblNewLabel_4.setFont(new Font("굴림", Font.PLAIN, 15));
+		lblNewLabel_4.setBounds(13, 9, 230, 60);
+		getContentPane().add(lblNewLabel_4);
+		
+		this.setVisible(true);
+	}
+	
+	
+	public void stopW() {
+		setBounds(510, 400, 270, 130);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblNewLabel_5 = new JLabel("<html><center><html>재생 중인 곡이 없습니다.<br></html>");
+		lblNewLabel_5.setFont(new Font("굴림", Font.PLAIN, 15));
+		lblNewLabel_5.setBounds(13, 9, 230, 60);
+		getContentPane().add(lblNewLabel_5);
+		
+		this.setVisible(true);
+	}
+	
 }
 
 
