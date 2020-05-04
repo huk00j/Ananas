@@ -14,7 +14,7 @@ import DB.LoginDAO;
 import DB.SongDAO;
 import GUI.Join2;
 
-public class ServerC {
+public class ServerC extends Thread {
 
 	Socket socket = null;
 	InputStream input = null;
@@ -37,8 +37,17 @@ public class ServerC {
 	
 	ServerC(Socket socket) {
 		this.socket = socket;
+		run();
+	}
+
+	
+	
+	@Override
+	public void run() {
 		bridge();
 	}
+
+
 
 	private void socketSetting() { // ServerO 소켓 만들어놓고 포트 번호 생성.
 		new Thread(new Runnable() {
@@ -77,18 +86,27 @@ public class ServerC {
 	
 	
 	public void bridge() { // normal 명령어 받는 곳. //일단 serverO로 이동.
-		try {
-			while (true) { // 아이디 체크하면서 while문 만듦.
-				input = socket.getInputStream();
-				byte bb[] = new byte[100];
-				input.read(bb);
-				String jj = new String(bb);
-				jj = jj.trim();
-				joincode(jj); // 명령어 분류.
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				try {
+					while (true) { // 아이디 체크하면서 while문 만듦.
+						input = socket.getInputStream();
+						byte bb[] = new byte[100];
+						input.read(bb);
+						String jj = new String(bb);
+						jj = jj.trim();
+						joincode(jj); // 명령어 분류.
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		}).start();
+		
+		
 	}
 	
 	private void joincode(String jj) { // 명령어 분류하는 곳. // //일단 serverO로 이동.

@@ -358,7 +358,7 @@ public class Table2 extends JFrame {
 				}
 				String id = Cc.IDing;
 				Co.receiveLS();
-				Cc.send(id + "/재생목록"); // 이게 문제인데... "계정별재생목록" -> "재생목록"으로 변경.
+				Cc.send(id + "/재생목록");
 
 			}
 		});
